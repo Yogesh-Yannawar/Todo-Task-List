@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+  <div class="card">
+    <h1>Hello, {{ request.user.username }} 👋</h1>
+    <div class="user">
+        <div class="title">Get Things Done?</div>
+        <a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i></a>
+    </div>
+    <form class="input" method="POST">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Add Today's Task?" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;">
+        <input type="submit" value="ADD TASK" style="padding: 10px; background: #6a5acd; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+    </form>
+    <div>
+        {% for val in res %}
+        <div style="background-color: yellow;padding: 10px;display: flex;justify-content: space-between;margin-top: 10px;">
+            <h5>{{val.sno}}</h5>
+            <p style="flex: 2; margin: 20px; text-align: left; word-wrap: break-word; overflow-wrap: break-word;">{{val.title}}</p>
+            <div style="margin-top: 15px;">
+                <a href="/update/{{val.sno}}"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="/delete/{{val.sno}}"><i class="fa-solid fa-trash"></i></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>    
+  </div>
+</body>
+</html>
+
+<!-- https://chatgpt.com/share/68c8e965-169c-800f-b107-e763e5984824 -->
